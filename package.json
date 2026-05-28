@@ -1,0 +1,16 @@
+{
+  "name": "afya-chap-chap",
+  "version": "1.0.0",
+  "description": "Premium full-stack clinic management system",
+  "scripts": {
+    "start": "node backend/server.js",
+    "backend": "cd backend && npm run dev || node server.js",
+    "frontend": "cd frontend && npm run dev",
+    "dev": "npx concurrently \"npm run backend\" \"npm run frontend\"",
+    "build": "cd frontend && npm run build && cd ../backend && npm install",
+    "install-all": "npm install && cd backend && npm install && cd ../frontend && npm install"
+  },
+  "devDependencies": {
+    "concurrently": "^8.2.2"
+  }
+}
