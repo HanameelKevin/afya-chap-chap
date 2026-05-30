@@ -35,8 +35,7 @@ app.get('/api/health', (req, res) => {
   res.json({ status: 'ok', timestamp: new Date() });
 });
 
-const { getClinicalInsight } = require('./services/aiService');
-const { sendSMS } = require('./services/smsService');
+const { getClinicalInsight, analyzeSymptoms } = require('./services/aiService');
 
 // ... existing code ...
 
@@ -45,6 +44,13 @@ app.post('/api/ai/diagnose', async (req, res) => {
   const { vitals } = req.body;
   const insight = await getClinicalInsight(vitals);
   res.json({ insight });
+});
+
+// AI Symptom Checker Endpoint
+app.post('/api/ai/symptoms', async (req, res) => {
+  const { symptoms, history } = req.body;
+  const result = await analyzeSymptoms(symptoms, history);
+  res.json(result);
 });
 
 // Booking endpoint with SMS trigger
