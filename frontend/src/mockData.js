@@ -54,3 +54,10 @@ export const patientUser = {
   id: 'P-9021',
   weeks: 32
 };
+
+export const tips = [
+  { title: 'Nutrition', text: 'Increase your intake of leafy greens and reduce salt to manage your blood pressure naturally.', color: 'green' },
+  { title: 'Rest', text: 'Aim for 8-10 hours of sleep. Use a side-sleeping position with a pillow between your knees for better circulation.', color: 'blue' },
+  { title: 'Monitoring', text: 'Track your fetal kicks daily. You should feel at least 10 movements in a 2-hour period.', color: 'amber' },
+  { title: 'Clinical', text: 'Your next ANC checkup is in 4 days. Please have your clinical card and recent lab results ready.', color: 'teal' },
+];
