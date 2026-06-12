@@ -2,6 +2,7 @@ import React from 'react';
 import { motion } from 'framer-motion';
 import { MetricCard, Card, RiskPill } from '../ui/Cards';
 import AICard from '../ui/AICard';
+import { patients, sessions } from '../../mockData';
 import { IconAlertTriangle } from '@tabler/icons-react';
 
 const HWDashboard = ({ name }) => {
@@ -18,79 +19,85 @@ const HWDashboard = ({ name }) => {
     show: { opacity: 1, y: 0 }
   };
 
+  const highRiskPatients = patients.filter(p => p.risk === 'CRITICAL' || p.risk === 'HIGH');
+
   return (
-    <motion.div variants={container} initial="hidden" animate="show" className="space-y-6">
-      <div className="flex items-center justify-between">
-        <h1 className="text-xl font-bold text-text">Good morning, {name} 👋</h1>
-        <div className="text-[12px] text-text3">Wednesday, 27 May 2026</div>
+    <motion.div variants={container} initial="hidden" animate="show" className="space-y-8">
+      <div className="flex items-end justify-between border-b border-black/5 pb-6">
+        <div>
+          <h1 className="text-3xl journal-title text-text">Good morning, {name}</h1>
+          <p className="text-[13px] text-text3 mt-1 font-medium uppercase tracking-widest">Clinical Command & Frontline Briefing</p>
+        </div>
+        <div className="text-[12px] font-bold text-text2 bg-surface2 px-3 py-1 rounded-full">Wednesday, 27 May 2026</div>
       </div>
 
-      <motion.div variants={item} className="bg-red-light border border-[#F09595] rounded-lg p-3 flex items-center gap-3">
-        <IconAlertTriangle className="text-red shrink-0" size={20} />
-        <div className="text-[13px] text-red flex-1">
-          2 patients flagged <strong>CRITICAL</strong> — Kisumu North session starting at 10:00 AM
+      <motion.div 
+        variants={item} 
+        className="bg-[#FFF8F8] border border-red/10 rounded-2xl p-4 flex items-center gap-4 shadow-sm"
+      >
+        <div className="w-10 h-10 bg-red-light rounded-full flex items-center justify-center text-red shrink-0 shadow-sm">
+          <IconAlertTriangle size={20} stroke={2} />
         </div>
-        <div className="text-[12px] font-bold text-red underline cursor-pointer">Review now →</div>
+        <div className="text-[14px] text-red-900 flex-1 font-medium">
+          {highRiskPatients.length} patients flagged <strong className="font-bold underline">HIGH RISK</strong> — Emergency unit dispatch recommended for Kisumu North.
+        </div>
+        <button className="text-[11px] font-bold text-red bg-white px-4 py-2 rounded-lg shadow-sm border border-red/5 hover:bg-red-light transition-all uppercase tracking-widest">
+          Deploy Protocol
+        </button>
       </motion.div>
 
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
-        <MetricCard value="247" label="Active patients" badge={{ text: "+12 this week", color: 'green' }} />
-        <MetricCard value="3" label="Sessions today" badge={{ text: "1 in progress", color: 'amber' }} />
-        <MetricCard value="18" label="High-risk cases" badge={{ text: "2 critical", color: 'red' }} />
-        <MetricCard value="94%" label="SMS delivery rate" badge={{ text: "Swahili + EN", color: 'green' }} />
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+        <MetricCard value="247" label="Active Patients" badge={{ text: "+12 this week", color: 'green' }} />
+        <MetricCard value="03" label="Today's Sessions" badge={{ text: "1 in progress", color: 'amber' }} />
+        <MetricCard value="18" label="Risk Escalations" badge={{ text: "2 critical", color: 'red' }} />
+        <MetricCard value="94%" label="SMS Delivery" badge={{ text: "Registry Sync", color: 'green' }} />
       </div>
 
-      <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
-        <div className="lg:col-span-2">
-          <Card title="High-risk maternal patients" link="View all">
-            <div className="divide-y divide-black/5">
-              {[
-                { name: 'Aisha Wanjiku', sub: '32 wks · BP 148/96', risk: 'CRITICAL', initial: 'AW', color: '#993C1D', bg: '#FAECE7' },
-                { name: 'Fatuma Mwangi', sub: '38 wks · Hb 7.2 g/dL', risk: 'CRITICAL', initial: 'FM', color: '#854F0B', bg: '#FAEEDA' },
-                { name: 'Grace Njeri', sub: '28 wks · Prev. C-section', risk: 'HIGH', initial: 'GN', color: '#854F0B', bg: '#FAEEDA' },
-                { name: 'Mary Otieno', sub: '20 wks · MUAC 20cm', risk: 'MEDIUM', initial: 'MO', color: '#185FA5', bg: '#E6F1FB' },
-              ].map((p, i) => (
-                <div key={i} className="flex items-center gap-3 py-3 first:pt-0 last:pb-0">
-                  <div className="w-8 h-8 rounded-full flex items-center justify-center text-[11px] font-bold" style={{ backgroundColor: p.bg, color: p.color }}>
+      <div className="grid grid-cols-1 lg:grid-cols-3 gap-10">
+        <motion.div variants={item} className="lg:col-span-2">
+          <Card title="High-Risk Maternal Registry" link="Full Directory">
+            <div className="divide-y divide-black/5 mt-4">
+              {patients.slice(0, 4).map((p, i) => (
+                <div key={i} className="flex items-center gap-5 py-5 first:pt-0 last:pb-0 group cursor-pointer hover:bg-surface2/30 transition-all px-2 -mx-2 rounded-xl">
+                  <div className="w-12 h-12 rounded-full flex items-center justify-center text-[13px] font-bold shadow-sm" style={{ backgroundColor: p.bg, color: p.color }}>
                     {p.initial}
                   </div>
-                  <div>
-                    <div className="text-[13px] font-medium text-text">{p.name}</div>
-                    <div className="text-[11px] text-text3">{p.sub}</div>
+                  <div className="flex-1">
+                    <div className="text-[15px] font-bold text-text group-hover:text-teal transition-colors">{p.name}</div>
+                    <div className="text-[11px] text-text3 font-medium mt-0.5">{p.weeks} wks · BP {p.bp} · Hb {p.hb}</div>
                   </div>
-                  <RiskPill level={p.risk} />
+                  <div className="shrink-0">
+                    <RiskPill level={p.risk} />
+                  </div>
                 </div>
               ))}
             </div>
           </Card>
-        </div>
+        </motion.div>
         
-        <div className="space-y-4">
-          <Card title="Today's sessions" link="Manage →">
-            <div className="divide-y divide-black/5">
-              {[
-                { name: 'Kisumu North', sub: 'In progress · 14 checked in', stat: '18 booked', dot: 'bg-green' },
-                { name: 'Kakamega East', sub: 'Starts 2:00 PM', stat: '11 booked', dot: 'bg-amber' },
-              ].map((s, i) => (
-                <div key={i} className="flex items-center gap-3 py-3 first:pt-0 last:pb-0">
-                  <div className={`w-2.5 h-2.5 rounded-full shrink-0 ${s.dot}`} />
+        <motion.div variants={item} className="space-y-8">
+          <Card title="Operational Pipeline" link="Schedule">
+            <div className="divide-y divide-black/5 mt-4">
+              {sessions.slice(0, 2).map((s, i) => (
+                <div key={i} className="flex items-center gap-5 py-5 first:pt-0 last:pb-0">
+                  <div className={`w-3 h-3 rounded-full shrink-0 shadow-sm ${s.dot} ${s.sub.includes('Active') ? 'animate-pulse' : ''}`} />
                   <div>
-                    <div className="text-[13px] font-medium text-text">{s.name}</div>
-                    <div className="text-[11px] text-text3">{s.sub}</div>
+                    <div className="text-[15px] font-bold text-text">{s.name}</div>
+                    <div className="text-[11px] text-text3 font-medium mt-0.5">{s.sub}</div>
                   </div>
-                  <div className="ml-auto text-[12px] text-text2">{s.stat}</div>
+                  <div className="ml-auto text-[10px] font-black text-text2 bg-surface2 px-2.5 py-1 rounded-full uppercase tracking-tighter">{s.stat}</div>
                 </div>
               ))}
             </div>
           </Card>
           
           <AICard 
-            title="AI session briefing" 
-            body="Kisumu North — 2 critical cases need escalation. Prepare BP kit + IV fluids. 78% attendance predicted based on SMS confirms." 
-            action="Get full briefing ↗"
+            title="Session Insight" 
+            body="Priority for Kisumu North: Coordinate with Dr. Omolo for 2 pre-eclampsia reviews. Expected attendance 78% based on SMS confirmations." 
+            action="Briefing Detail"
             color="teal"
           />
-        </div>
+        </motion.div>
       </div>
     </motion.div>
   );

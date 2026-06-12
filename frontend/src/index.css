@@ -38,9 +38,24 @@
 }
 
 :root {
-  font-family: 'DM Sans', sans-serif;
+  font-family: 'Geist', sans-serif;
   background-color: var(--color-bg);
   color: var(--color-text);
+  -webkit-font-smoothing: antialiased;
+}
+
+.font-editorial {
+  font-family: 'Newsreader', serif;
+}
+
+.journal-title {
+  font-family: 'Newsreader', serif;
+  font-style: italic;
+  letter-spacing: -0.02em;
+}
+
+.document-border {
+  border: 0.5px solid rgba(0, 0, 0, 0.08);
 }
 
 body {

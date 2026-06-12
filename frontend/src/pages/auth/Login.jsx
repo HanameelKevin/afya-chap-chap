@@ -1,111 +1,104 @@
 import React, { useState } from 'react';
-import { motion } from 'framer-motion';
-import { IconStethoscope, IconUserHeart, IconBuildingHospital, IconShieldCheck, IconReportAnalytics, IconWoman, IconLock, IconWifi } from '@tabler/icons-react';
 import { useNavigate } from 'react-router-dom';
-
-const RoleButton = ({ role, label, icon: Icon, selected, onClick }) => (
-  <button
-    onClick={onClick}
-    className={`flex flex-col items-center gap-1.5 p-2.5 border rounded-lg transition-all ${
-      selected 
-        ? (role === 'Patient' ? 'border-blue bg-blue-light text-blue' : 'border-teal bg-teal-light text-teal') 
-        : 'border-black/14 bg-surface text-text2 hover:border-gray-mid hover:bg-surface2'
-    }`}
-  >
-    <Icon size={22} />
-    <span className="text-[11px] font-medium leading-tight">{label}</span>
-  </button>
-);
+import { motion } from 'framer-motion';
+import { healthWorker, patientUser } from '../../mockData';
+import { IconStethoscope, IconUser, IconArrowRight, IconHeart } from '@tabler/icons-react';
 
 const Login = ({ setAuth }) => {
-  const [role, setRole] = useState('Health worker');
   const navigate = useNavigate();
+  const [loading, setLoading] = useState(false);
 
-  const roles = [
-    { label: 'Health worker', icon: IconUserHeart },
-    { label: 'Coordinator', icon: IconBuildingHospital },
-    { label: 'Supervisor', icon: IconShieldCheck },
-    { label: 'MOH official', icon: IconReportAnalytics },
-    { label: 'Patient', icon: IconWoman },
-    { label: 'Admin', icon: IconLock },
-  ];
-
-  const handleLogin = () => {
-    const isPatient = role === 'Patient';
-    setAuth({
-      role: role,
-      name: isPatient ? 'Aisha Wanjiku' : 'Hanameel Kevin',
-      userInitial: isPatient ? 'AW' : 'HK'
-    });
-    navigate('/dashboard');
+  const handleQuickLogin = (role) => {
+    setLoading(true);
+    setTimeout(() => {
+      const userData = role === 'Health worker' ? healthWorker : patientUser;
+      setAuth(userData);
+      navigate('/dashboard');
+      setLoading(false);
+    }, 1000);
   };
 
   return (
-    <div className="min-h-screen bg-bg flex items-center justify-center p-6">
-      <motion.div 
-        initial={{ opacity: 0, y: 20 }}
-        animate={{ opacity: 1, y: 0 }}
-        className="bg-surface border border-black/8 rounded-xl p-10 w-full max-w-[420px] shadow-md"
-      >
-        <div className="flex items-center gap-3 mb-8">
-          <div className="w-[42px] h-[42px] rounded-xl bg-teal flex items-center justify-center">
-            <IconStethoscope size={22} className="text-white" />
-          </div>
+    <div className="min-h-screen bg-[#FAFAF8] flex items-center justify-center p-6">
+      <div className="max-w-4xl w-full grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
+        <div className="space-y-8">
           <div>
-            <div className="text-[18px] font-semibold text-text">AfyaMobile</div>
-            <div className="text-[12px] text-text3">Clinic Manager · Kenya</div>
+            <div className="w-12 h-12 bg-teal flex items-center justify-center rounded-xl text-white mb-6 shadow-lg shadow-teal/20">
+              <IconHeart size={28} stroke={2} />
+            </div>
+            <h1 className="text-5xl journal-title text-text leading-tight">
+              Dignity in every <br /><span className="text-teal italic">heartbeat.</span>
+            </h1>
+            <p className="text-[16px] text-text3 mt-6 leading-relaxed font-editorial italic max-w-sm">
+              "A premium clinic management system designed for the frontline of maternal care."
+            </p>
+          </div>
+
+          <div className="flex items-center gap-4 py-6 border-y border-black/5">
+            <div className="flex -space-x-2">
+              {[1, 2, 3].map(i => (
+                <div key={i} className="w-8 h-8 rounded-full border-2 border-white bg-surface2 flex items-center justify-center text-[10px] font-bold text-text3">
+                  {i}
+                </div>
+              ))}
+            </div>
+            <div className="text-[12px] text-text2 font-medium">Trusted by 240+ health facilities in East Africa</div>
           </div>
         </div>
 
-        <div className="space-y-4 mb-6">
-          <div>
-            <label className="text-[12px] font-medium text-text2 mb-1.5 block">Email address</label>
-            <input 
-              type="email" 
-              defaultValue="user@afyamobile.ke"
-              className="w-full px-3 py-2 border border-black/14 rounded-md focus:border-teal outline-none transition-colors text-[14px]"
-            />
+        <div className="bg-white border border-black/10 rounded-3xl p-10 shadow-[0_8px_30px_rgb(0,0,0,0.04)] space-y-8">
+          <div className="text-center">
+            <h2 className="text-2xl font-bold text-text">Welcome back</h2>
+            <p className="text-[14px] text-text3 mt-1">Please select your portal to continue</p>
           </div>
-          <div>
-            <label className="text-[12px] font-medium text-text2 mb-1.5 block">Password</label>
-            <input 
-              type="password" 
-              defaultValue="••••••••"
-              className="w-full px-3 py-2 border border-black/14 rounded-md focus:border-teal outline-none transition-colors text-[14px]"
-            />
+
+          <div className="space-y-4">
+            <button 
+              onClick={() => handleQuickLogin('Health worker')}
+              disabled={loading}
+              className="w-full group flex items-center justify-between p-5 bg-teal text-white rounded-2xl hover:bg-teal-dark transition-all cursor-pointer shadow-xl shadow-teal/15 disabled:opacity-50"
+            >
+              <div className="flex items-center gap-4 text-left">
+                <div className="w-12 h-12 bg-white/10 rounded-xl flex items-center justify-center">
+                  <IconStethoscope size={24} />
+                </div>
+                <div>
+                  <div className="text-[15px] font-bold">Health Worker Portal</div>
+                  <div className="text-[12px] opacity-70">Manage patients & sessions</div>
+                </div>
+              </div>
+              <IconArrowRight size={20} className="group-hover:translate-x-1 transition-transform" />
+            </button>
+
+            <button 
+              onClick={() => handleQuickLogin('Patient')}
+              disabled={loading}
+              className="w-full group flex items-center justify-between p-5 bg-white border border-black/10 text-text rounded-2xl hover:bg-surface2 transition-all cursor-pointer disabled:opacity-50"
+            >
+              <div className="flex items-center gap-4 text-left">
+                <div className="w-12 h-12 bg-blue-light text-blue rounded-xl flex items-center justify-center">
+                  <IconUser size={24} />
+                </div>
+                <div>
+                  <div className="text-[15px] font-bold">Patient Portal</div>
+                  <div className="text-[12px] text-text3">View records & book visits</div>
+                </div>
+              </div>
+              <IconArrowRight size={20} className="group-hover:translate-x-1 transition-transform" />
+            </button>
+          </div>
+
+          <div className="pt-4 text-center">
+            <p className="text-[12px] text-text3">
+              Forgot password? <span className="text-teal font-bold cursor-pointer hover:underline">Contact Administrator</span>
+            </p>
           </div>
         </div>
+      </div>
 
-        <div className="mb-6">
-          <div className="text-[12px] font-medium text-text2 mb-2">I am a</div>
-          <div className="grid grid-cols-3 gap-2">
-            {roles.map((r, i) => (
-              <RoleButton 
-                key={i}
-                role={r.label}
-                label={r.label}
-                icon={r.icon}
-                selected={role === r.label}
-                onClick={() => setRole(r.label)}
-              />
-            ))}
-          </div>
-        </div>
-
-        <button 
-          onClick={handleLogin}
-          className={`w-full py-3 rounded-md text-[14px] font-semibold text-white transition-colors ${
-            role === 'Patient' ? 'bg-blue hover:bg-[#0C447C]' : 'bg-teal hover:bg-teal-dark'
-          }`}
-        >
-          Sign in to AfyaMobile
-        </button>
-
-        <div className="mt-4 flex items-center gap-1.5 px-3 py-2 bg-green-light text-green rounded-full justify-center">
-          <IconWifi size={14} />
-          <span className="text-[12px]">Offline mode available — data syncs on reconnect</span>
-        </div>
-      </motion.div>
+      <div className="fixed bottom-8 left-1/2 -translate-x-1/2 text-[11px] text-text3 font-bold uppercase tracking-[0.2em] opacity-40">
+        Afya Chap Chap — Editorial v1.0
+      </div>
     </div>
   );
 };

@@ -11,14 +11,15 @@ const MetricCard = ({ value, label, badge, color = 'teal' }) => {
 
   return (
     <motion.div 
-      whileHover={{ y: -2 }}
-      className="bg-surface border border-black/8 rounded-lg p-4 shadow-sm"
+      whileHover={{ y: -3, shadow: "0 12px 24px rgba(0,0,0,0.04)" }}
+      transition={{ type: "spring", stiffness: 400, damping: 30 }}
+      className="bg-surface border-[0.5px] border-black/10 rounded-xl p-5 shadow-[0_2px_8px_rgba(0,0,0,0.02)]"
     >
-      <div className="text-2xl font-bold text-text leading-none">{value}</div>
-      <div className="text-[12px] text-text2 mt-1.5">{label}</div>
+      <div className="text-3xl font-bold text-text tracking-tight leading-none">{value}</div>
+      <div className="text-[12px] font-medium text-text2/70 uppercase tracking-wider mt-2.5">{label}</div>
       {badge && (
-        <div className="mt-2">
-          <span className={`inline-flex items-center px-2 py-0.5 rounded-full text-[11px] font-medium ${badgeColors[badge.color] || badgeColors.green}`}>
+        <div className="mt-4">
+          <span className={`inline-flex items-center px-2.5 py-0.5 rounded-full text-[10px] font-bold uppercase tracking-wide ${badgeColors[badge.color] || badgeColors.green}`}>
             {badge.text}
           </span>
         </div>
@@ -28,11 +29,11 @@ const MetricCard = ({ value, label, badge, color = 'teal' }) => {
 };
 
 const Card = ({ title, link, children, className = '' }) => (
-  <div className={`bg-surface border border-black/8 rounded-lg p-4 shadow-sm ${className}`}>
+  <div className={`bg-surface border-[0.5px] border-black/10 rounded-xl p-6 shadow-[0_2px_8px_rgba(0,0,0,0.02)] ${className}`}>
     {(title || link) && (
-      <div className="flex items-center justify-between mb-3">
-        {title && <h3 className="text-[13px] font-semibold text-text">{title}</h3>}
-        {link && <span className="text-[12px] text-teal cursor-pointer font-medium hover:underline">{link}</span>}
+      <div className="flex items-center justify-between mb-5">
+        {title && <h3 className="text-[16px] journal-title font-semibold text-text">{title}</h3>}
+        {link && <span className="text-[12px] text-teal cursor-pointer font-bold uppercase tracking-wider hover:underline opacity-80">{link}</span>}
       </div>
     )}
     {children}

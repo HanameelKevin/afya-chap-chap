@@ -48,7 +48,17 @@ const HealthWorkerSchema = new Schema({
   experience: { type: String },
   rating: { type: Number, default: 5.0 },
   activeSessions: { type: Number, default: 0 },
-  avatar: { type: String }
+  avatar: { type: String },
+  // MoH Verification Fields
+  mohLicenseNumber: { type: String, unique: true, sparse: true },
+  nurseId: { type: String, unique: true, sparse: true },
+  isVerified: { type: Boolean, default: false },
+  verifiedAt: { type: Date },
+  verificationStatus: {
+    type: String,
+    enum: ['unverified', 'pending', 'verified', 'rejected'],
+    default: 'unverified'
+  }
 });
 
 // Booking Schema

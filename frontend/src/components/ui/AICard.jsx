@@ -5,36 +5,47 @@ import { IconSparkles } from '@tabler/icons-react';
 const AICard = ({ title, body, action, color = 'teal' }) => {
   const styles = {
     teal: {
-      bg: 'bg-teal-light border-teal-mid',
+      bg: 'bg-[#F4F9F7] border-teal/10',
       icon: 'text-teal',
       title: 'text-teal-dark',
-      body: 'text-teal',
-      btn: 'text-teal border-teal-mid bg-surface hover:bg-teal-light',
+      body: 'text-teal/80',
+      btn: 'text-teal border-teal/20 bg-white hover:bg-teal-light',
     },
     blue: {
-      bg: 'bg-blue-light border-[#85B7EB]',
+      bg: 'bg-[#F4F8FC] border-blue/10',
       icon: 'text-blue',
       title: 'text-[#0C447C]',
-      body: 'text-blue',
-      btn: 'text-blue border-[#85B7EB] bg-surface hover:bg-blue-light',
+      body: 'text-blue/80',
+      btn: 'text-blue border-blue/20 bg-white hover:bg-blue-light',
     }
   };
 
   const theme = styles[color] || styles.teal;
 
   return (
-    <div className={`rounded-lg p-4 border flex gap-3 ${theme.bg}`}>
-      <IconSparkles size={20} className={`${theme.icon} shrink-0 mt-0.5`} />
+    <motion.div 
+      initial={{ opacity: 0, x: 10 }}
+      animate={{ opacity: 1, x: 0 }}
+      transition={{ type: "spring", stiffness: 100, damping: 20 }}
+      className={`rounded-xl p-5 border shadow-sm flex gap-4 ${theme.bg}`}
+    >
+      <div className={`w-8 h-8 rounded-full bg-white flex items-center justify-center shrink-0 shadow-sm`}>
+        <IconSparkles size={16} className={`${theme.icon}`} />
+      </div>
       <div>
-        <div className={`text-[13px] font-semibold mb-1 ${theme.title}`}>{title}</div>
-        <div className={`text-[12px] leading-relaxed ${theme.body}`}>{body}</div>
+        <div className={`text-[11px] font-bold uppercase tracking-[0.1em] mb-1.5 ${theme.title} opacity-60`}>
+          {title}
+        </div>
+        <div className={`text-[15px] leading-relaxed font-editorial italic ${theme.body}`}>
+          "{body}"
+        </div>
         {action && (
-          <button className={`mt-2.5 px-3 py-1 rounded-md text-[12px] font-medium border transition-colors cursor-pointer ${theme.btn}`}>
+          <button className={`mt-4 px-4 py-1.5 rounded-full text-[12px] font-semibold border transition-all cursor-pointer shadow-sm active:scale-95 ${theme.btn}`}>
             {action}
           </button>
         )}
       </div>
-    </div>
+    </motion.div>
   );
 };
 

@@ -19,85 +19,98 @@ const PatientDashboard = ({ name }) => {
   };
 
   return (
-    <motion.div variants={container} initial="hidden" animate="show" className="space-y-6">
-      <div className="flex items-center justify-between">
-        <h1 className="text-xl font-bold text-text">Habari, {name} 👋</h1>
-        <div className="text-[12px] text-text3">Wednesday, 27 May 2026</div>
+    <motion.div variants={container} initial="hidden" animate="show" className="space-y-8">
+      <div className="flex items-end justify-between border-b border-black/5 pb-6">
+        <div>
+          <h1 className="text-3xl journal-title text-text">Habari, {name}</h1>
+          <p className="text-[13px] text-text3 mt-1 font-medium uppercase tracking-widest">Personal Maternal Health Journey</p>
+        </div>
+        <div className="text-[12px] font-bold text-text2 bg-surface2 px-3 py-1 rounded-full">Wednesday, 27 May 2026</div>
       </div>
 
-      <motion.div variants={item} className="bg-blue-light border border-[#85B7EB] rounded-lg p-3 flex items-center gap-3">
-        <IconCalendarEvent className="text-blue shrink-0" size={20} />
-        <div className="text-[13px] text-blue flex-1">
-          Your next clinic visit is <strong>Thursday 29 May</strong> at Kisumu North — 10:00 AM.
+      <motion.div 
+        variants={item} 
+        className="bg-[#F5F8FB] border border-blue/10 rounded-2xl p-4 flex items-center gap-4 shadow-sm"
+      >
+        <div className="w-10 h-10 bg-blue-light rounded-full flex items-center justify-center text-blue shrink-0 shadow-sm">
+          <IconCalendarEvent size={20} stroke={2} />
         </div>
+        <div className="text-[14px] text-blue-900 flex-1 font-medium">
+          Your next clinical visit is scheduled for <strong className="font-bold underline">Thursday 29 May</strong> — Kisumu North Hub.
+        </div>
+        <button className="text-[11px] font-bold text-blue bg-white px-4 py-2 rounded-lg shadow-sm border border-blue/5 hover:bg-blue-light transition-all uppercase tracking-widest">
+          Check Details
+        </button>
       </motion.div>
 
-      <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-        <MetricCard value="32" label="Weeks pregnant" badge={{ text: "Due 14 Aug", color: 'blue' }} />
-        <MetricCard value="4" label="Visits completed" badge={{ text: "On schedule", color: 'green' }} />
-        <MetricCard value="2" label="Visits remaining" badge={{ text: "Next in 2 days", color: 'amber' }} />
+      <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+        <MetricCard value="32" label="Weeks Pregnant" badge={{ text: "Due 14 Aug", color: 'blue' }} />
+        <MetricCard value="04" label="Visits Completed" badge={{ text: "On Schedule", color: 'green' }} />
+        <MetricCard value="02" label="Visits Remaining" badge={{ text: "Next in 2 days", color: 'amber' }} />
       </div>
 
-      <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
-        <div className="space-y-4">
-          <Card title="My latest vitals" link="Full history">
-            <div className="grid grid-cols-3 gap-2">
-              <div className="bg-surface2 rounded-lg p-2.5 text-center border border-black/5">
-                <div className="text-lg font-bold text-red">148/96</div>
-                <div className="text-[10px] text-text2 uppercase">BP</div>
-                <div className="text-[9px] text-red mt-1">High</div>
+      <div className="grid grid-cols-1 lg:grid-cols-2 gap-10">
+        <motion.div variants={item} className="space-y-6">
+          <Card title="Latest Clinical Vitals" link="Historical Trends">
+            <div className="grid grid-cols-3 gap-4 mt-2">
+              <div className="bg-[#FFF8F8] rounded-2xl p-4 text-center border border-red/5">
+                <div className="text-xl font-black text-red tracking-tighter">148/96</div>
+                <div className="text-[9px] text-red/60 uppercase font-black tracking-widest mt-1">BP (mmHg)</div>
               </div>
-              <div className="bg-surface2 rounded-lg p-2.5 text-center border border-black/5">
-                <div className="text-lg font-bold text-amber">7.2</div>
-                <div className="text-[10px] text-text2 uppercase">Hb</div>
-                <div className="text-[9px] text-amber mt-1">g/dL</div>
+              <div className="bg-[#FFFBF2] rounded-2xl p-4 text-center border border-amber/5">
+                <div className="text-xl font-black text-amber tracking-tighter">7.2</div>
+                <div className="text-[9px] text-amber/60 uppercase font-black tracking-widest mt-1">Hb (g/dL)</div>
               </div>
-              <div className="bg-surface2 rounded-lg p-2.5 text-center border border-black/5">
-                <div className="text-lg font-bold text-green">142</div>
-                <div className="text-[10px] text-text2 uppercase">Fetal HR</div>
-                <div className="text-[9px] text-green mt-1">bpm</div>
+              <div className="bg-[#F6FBF8] rounded-2xl p-4 text-center border border-green/5">
+                <div className="text-xl font-black text-green tracking-tighter">142</div>
+                <div className="text-[9px] text-green/60 uppercase font-black tracking-widest mt-1">Fetal HR</div>
               </div>
             </div>
-            <div className="text-[10px] text-text3 mt-3 text-center">Last recorded 25 May · Kisumu North</div>
+            <div className="text-[11px] text-text3 mt-4 text-center font-editorial italic">
+              "Recorded 2 days ago at Kisumu North Frontline Unit"
+            </div>
           </Card>
 
-          <Card title="Pregnancy progress">
-            <div className="text-[12px] text-text3 mb-2">Week 32 of 40</div>
-            <div className="h-2 bg-surface2 rounded-full overflow-hidden">
+          <Card title="Gestation Progress">
+            <div className="flex justify-between items-end mb-3">
+              <div className="text-[13px] font-bold text-text">Week 32 <span className="text-text3 font-medium">of 40</span></div>
+              <div className="text-[11px] font-black text-blue uppercase tracking-widest">80% Milestone</div>
+            </div>
+            <div className="h-2.5 bg-surface2 rounded-full overflow-hidden shadow-inner border border-black/5">
               <motion.div 
                 initial={{ width: 0 }}
                 animate={{ width: '80%' }}
-                transition={{ duration: 1, delay: 0.5 }}
-                className="h-full bg-blue" 
+                transition={{ duration: 1.5, ease: "easeOut", delay: 0.5 }}
+                className="h-full bg-gradient-to-r from-blue-light to-blue shadow-[0_0_10px_rgba(24,95,165,0.3)]" 
               />
             </div>
-            <div className="flex justify-between text-[10px] text-text3 mt-2 font-medium">
-              <span>Week 1</span>
-              <span>Week 20</span>
-              <span>Week 40</span>
+            <div className="flex justify-between text-[9px] text-text3 mt-3 font-black uppercase tracking-[0.2em] opacity-60">
+              <span>Conception</span>
+              <span>Viability</span>
+              <span>Full Term</span>
             </div>
           </Card>
 
-          <button className="w-full py-3 bg-blue text-white rounded-lg font-semibold text-[14px] shadow-sm hover:bg-blue-mid transition-all">
-            Book my next visit →
+          <button className="w-full py-4 bg-blue text-white rounded-xl font-bold text-[14px] shadow-xl shadow-blue/15 hover:bg-[#0C447C] transition-all active:scale-[0.98] uppercase tracking-widest">
+            Book Next Appointment
           </button>
-        </div>
+        </motion.div>
 
-        <div className="space-y-4">
-          <Card title="Visit timeline" link="Book next">
-            <div className="space-y-4 relative before:absolute before:left-[11px] before:top-2 before:bottom-2 before:w-[1px] before:bg-black/10">
+        <motion.div variants={item} className="space-y-6">
+          <Card title="Clinical Timeline" link="Registry">
+            <div className="space-y-6 relative mt-4 before:absolute before:left-[11px] before:top-2 before:bottom-2 before:w-[1px] before:bg-black/5">
               {[
-                { date: '12 Mar', title: 'First ANC visit', sub: 'Kisumu North · Done', dot: 'bg-teal' },
-                { date: '8 Apr', title: 'Second ANC visit', sub: 'Kakamega East · Done', dot: 'bg-teal' },
-                { date: '10 May', title: 'Third ANC visit', sub: 'Kisumu North · Done', dot: 'bg-teal' },
-                { date: '29 May', title: 'Fourth ANC visit', sub: 'Kisumu North · Upcoming', dot: 'bg-blue', active: true },
+                { date: '12 Mar', title: 'First ANC visit', sub: 'Kisumu North · Authenticated', dot: 'bg-teal' },
+                { date: '8 Apr', title: 'Second ANC visit', sub: 'Kakamega East · Authenticated', dot: 'bg-teal' },
+                { date: '10 May', title: 'Third ANC visit', sub: 'Kisumu North · Authenticated', dot: 'bg-teal' },
+                { date: '29 May', title: 'Fourth ANC visit', sub: 'Kisumu North · Pending Dispatch', dot: 'bg-blue', active: true },
               ].map((t, i) => (
-                <div key={i} className="flex gap-4 items-start relative pl-2">
-                  <div className="w-12 text-[11px] text-text3 mt-0.5">{t.date}</div>
-                  <div className={`w-[9px] h-[9px] rounded-full mt-1.5 shrink-0 z-10 ${t.dot}`} />
+                <div key={i} className="flex gap-6 items-start relative pl-2 group">
+                  <div className="w-14 text-[11px] font-bold text-text3 mt-0.5 uppercase tracking-tighter">{t.date}</div>
+                  <div className={`w-[11px] h-[11px] rounded-full mt-1.5 shrink-0 z-10 border-2 border-white shadow-sm ${t.dot} ${t.active ? 'animate-pulse' : ''}`} />
                   <div>
-                    <div className="text-[13px] font-medium text-text">{t.title}</div>
-                    <div className={`text-[11px] ${t.active ? 'text-blue font-medium' : 'text-text3'}`}>{t.sub}</div>
+                    <div className="text-[15px] font-bold text-text group-hover:text-blue transition-colors">{t.title}</div>
+                    <div className={`text-[12px] font-medium mt-0.5 italic font-editorial ${t.active ? 'text-blue' : 'text-text3'}`}>{t.sub}</div>
                   </div>
                 </div>
               ))}
@@ -105,12 +118,12 @@ const PatientDashboard = ({ name }) => {
           </Card>
 
           <AICard 
-            title="Health tip for you" 
-            body="Your blood pressure is elevated. Rest, reduce salt, and drink more water. Tell your health worker on Thursday." 
-            action="Learn more ↗"
+            title="Clinical Health Advisory" 
+            body="Based on your elevated BP, we recommend reducing physical exertion today. Your assigned nurse will perform a diagnostic re-evaluation on Thursday." 
+            action="Clinical Guidelines"
             color="blue"
           />
-        </div>
+        </motion.div>
       </div>
     </motion.div>
   );

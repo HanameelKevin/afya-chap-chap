@@ -35,9 +35,24 @@ app.get('/api/health', (req, res) => {
   res.json({ status: 'ok', timestamp: new Date() });
 });
 
-const { getClinicalInsight, analyzeSymptoms } = require('./services/aiService');
+const { getClinicalInsight, analyzeSymptoms, getEditorialSummary, getPatientAdvice } = require('./services/aiService');
+const { verifyProfessionalCredentials } = require('./services/mohService');
 
-// ... existing code ...
+// ... existing auth code ...
+
+// AI Editorial Briefing Endpoint
+app.post('/api/ai/briefing', async (req, res) => {
+  const { sessionData } = req.body;
+  const briefing = await getEditorialSummary(sessionData);
+  res.json({ briefing });
+});
+
+// AI Patient Advice Endpoint
+app.post('/api/ai/advice', async (req, res) => {
+  const { vitals } = req.body;
+  const advice = await getPatientAdvice(vitals);
+  res.json({ advice });
+});
 
 // AI Diagnostic Endpoint
 app.post('/api/ai/diagnose', async (req, res) => {

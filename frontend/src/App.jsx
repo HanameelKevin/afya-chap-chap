@@ -24,8 +24,10 @@ const Payments = lazy(() => import('./pages/tools/Payments'));
 
 // Support Pages
 const SupportMessages = lazy(() => import('./pages/support/Messages'));
-const SupportQRCard = lazy(() => import('./pages/support/QRCard'));
-const SupportHealthTips = lazy(() => import('./pages/support/HealthTips'));
+const QRCard = lazy(() => import('./pages/support/QRCard'));
+const HealthTips = lazy(() => import('./pages/support/HealthTips'));
+const ProfessionalVerification = lazy(() => import('./pages/auth/Verification'));
+
 
 const PlaceholderPage = lazy(() => import('./components/ui/PlaceholderPage'));
 
@@ -79,8 +81,9 @@ const App = () => {
 
             {/* Support Routes */}
             <Route path="/support/messages" element={auth ? <Layout {...auth}><SupportMessages /></Layout> : <Navigate to="/login" />} />
-            <Route path="/support/qr" element={auth ? <Layout {...auth}><SupportQRCard /></Layout> : <Navigate to="/login" />} />
-            <Route path="/support/tips" element={auth ? <Layout {...auth}><SupportHealthTips /></Layout> : <Navigate to="/login" />} />
+            <Route path="/support/qr" element={auth ? <Layout {...auth}><QRCard /></Layout> : <Navigate to="/login" />} />
+            <Route path="/support/tips" element={auth ? <Layout {...auth}><HealthTips /></Layout> : <Navigate to="/login" />} />
+            <Route path="/auth/verify" element={auth ? <Layout {...auth}><ProfessionalVerification /></Layout> : <Navigate to="/login" />} />
 
             <Route path="/" element={<Navigate to="/login" />} />
             <Route path="*" element={<Navigate to="/login" />} />
